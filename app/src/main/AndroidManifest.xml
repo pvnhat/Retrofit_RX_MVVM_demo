@@ -19,11 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.vnnht.retrofitrxdemo.screen.sign_up_screen.RegisterActivity"/>
-        <activity android:name="com.vnnht.retrofitrxdemo.screen.list_student_screen.ListStudentActivity">
-        </activity>
-        <activity android:name="com.vnnht.retrofitrxdemo.screen.list_using_rxjava.ListRXActivity">
-        </activity>
+        <activity android:name="com.vnnht.retrofitrxdemo.screen.list_student_screen.ListStudentActivity"/>
     </application>
 
 </manifest>

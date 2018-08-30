@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">RetrofitRxDemo</string>
     <string name="text_test">CCCCCCCCC</string>
+    <string name="text_login_title">LOG IN TO SYSTEM</string>
+    <string name="text_password">Enter password</string>
+    <string name="text_hint_login">Log in</string>
+    <string name="text_sign_in_hint">Sign Up</string>
+    <string name="text_login_success">Login with :</string>
+    <string name="text_failed_login">Failed :</string>
+    <string name="text_title_registera">SIGN UP TO SYSTEM</string>
+    <string name="text_hint_password">Enter password</string>
+    <string name="text_enter_username">Enter username</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="data_valid">Data isn\'t enough !</string>
+    <string name="text_null">Username is null !</string>
+    <string name="text_comming">Comming sooon :v</string>
 </resources>

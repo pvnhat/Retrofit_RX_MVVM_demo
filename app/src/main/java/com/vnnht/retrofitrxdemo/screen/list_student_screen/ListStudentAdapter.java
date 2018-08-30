@@ -1,29 +1,23 @@
 package com.vnnht.retrofitrxdemo.screen.list_student_screen;
 
-import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-import com.bumptech.glide.Glide;
 import com.example.vnnht.retrofitrxdemo.R;
+import com.example.vnnht.retrofitrxdemo.databinding.StudentRowBinding;
 import com.vnnht.retrofitrxdemo.data.model.Student;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListStudentAdapter extends RecyclerView.Adapter<ListStudentAdapter.ViewHolder> {
 
-    private Context mContext;
     private List<Student> mStudentList;
     private OnItemClickListener mOnItemClickListener;
 
-    public ListStudentAdapter(Context context, OnItemClickListener onItemClickListener) {
-        mContext = context;
+    ListStudentAdapter() {
         mStudentList = new ArrayList<>();
-        mOnItemClickListener = onItemClickListener;
     }
 
     public void updateStudentList(List<Student> studentList) {
@@ -34,17 +28,22 @@ public class ListStudentAdapter extends RecyclerView.Adapter<ListStudentAdapter.
         notifyDataSetChanged();
     }
 
+    public void setOnClickListener(OnItemClickListener onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.student_row, parent, false);
-        return new ViewHolder(itemView);
+        StudentRowBinding studentRowBinding =
+                DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
+                        R.layout.student_row, parent, false);
+        return new ViewHolder(studentRowBinding, mOnItemClickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.getViewHolder(holder, position);
+        holder.getViewHolder(mStudentList.get(position));
     }
 
     @Override
@@ -52,27 +51,21 @@ public class ListStudentAdapter extends RecyclerView.Adapter<ListStudentAdapter.
         return mStudentList != null ? mStudentList.size() : 0;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements OnItemClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTextId, mTextUsername;
-        private ImageView mImageAvatar;
+        private StudentRowBinding mStudentRowBinding;
+        private ItemStudentViewModel mItemStudentViewModel;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            mTextId = itemView.findViewById(R.id.text_id);
-            mTextUsername = itemView.findViewById(R.id.text_username);
-            mImageAvatar = itemView.findViewById(R.id.image_avatar);
+        ViewHolder(StudentRowBinding studentRowBinding, OnItemClickListener itemClickListener) {
+            super(studentRowBinding.getRoot());
+            mStudentRowBinding = studentRowBinding;
+            mItemStudentViewModel = new ItemStudentViewModel(itemClickListener);
+            mStudentRowBinding.setViewModel(mItemStudentViewModel);
         }
 
-        void getViewHolder(ViewHolder holder, int position) {
-            Glide.with(mContext).load(mStudentList.get(position).getAvatar()).into(holder.mImageAvatar);
-            holder.mTextId.setText(mStudentList.get(position).getStudentId());
-            holder.mTextUsername.setText(mStudentList.get(position).getUsername());
-        }
-
-        @Override
-        public void onItemClick() {
-
+        void getViewHolder(Student student) {
+            mItemStudentViewModel.setStudent(student);
+            mStudentRowBinding.executePendingBindings(); // thuc thi binding
         }
     }
 }

@@ -10,21 +10,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitData {
 
-    private static Retrofit sRetrofit = null;
+    private static Retrofit sRetrofit;
 
     public static Retrofit getStudentDataRX(String url) {
-        OkHttpClient okHttpClient =
-                new OkHttpClient.Builder().readTimeout(5000, TimeUnit.MILLISECONDS)
-                        .writeTimeout(5000, TimeUnit.MILLISECONDS)
-                        .connectTimeout(10000, TimeUnit.MILLISECONDS)
-                        .retryOnConnectionFailure(true)
-                        .build();
-        Gson gson = new GsonBuilder().setLenient().create();
-        sRetrofit = new Retrofit.Builder().baseUrl(url)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+        if (sRetrofit == null) { //phai check null de tranh truong hop goi 2 lan
+            OkHttpClient okHttpClient =
+                    new OkHttpClient.Builder().readTimeout(5000, TimeUnit.MILLISECONDS)
+                            .writeTimeout(5000, TimeUnit.MILLISECONDS)
+                            .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                            .retryOnConnectionFailure(true)
+                            .build();
+            Gson gson = new GsonBuilder().setLenient().create();
+            sRetrofit = new Retrofit.Builder().baseUrl(url)
+                    .client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
+        }
         return sRetrofit;
     }
 }

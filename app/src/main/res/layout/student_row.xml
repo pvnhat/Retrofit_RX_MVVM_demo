@@ -1,37 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    xmlns:tool="http://schemas.android.com/tools"
     >
-    <ImageView
-        android:id="@+id/image_avatar"
-        android:layout_width="@dimen/dp_70"
-        android:layout_height="@dimen/dp_70"
-        android:layout_margin="@dimen/dp_8"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
-    <TextView
-        android:id="@+id/text_id"
-        android:layout_width="wrap_content"
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.vnnht.retrofitrxdemo.screen.list_student_screen.ItemStudentViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dp_8"
-        android:maxLines="1"
-        android:text="@string/text_test"
-        android:textColor="@color/color_red_100"
-        android:textSize="@dimen/sp_22"
-        app:layout_constraintLeft_toRightOf="@id/image_avatar"
-        app:layout_constraintTop_toTopOf="@id/image_avatar"
-        />
-    <TextView
-        android:id="@+id/text_username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/text_test"
-        android:textSize="@dimen/sp_20"
-        app:layout_constraintLeft_toLeftOf="@id/text_id"
-        app:layout_constraintTop_toBottomOf="@id/text_id"
-        />
-</android.support.constraint.ConstraintLayout>
+        android:onClick="@{viewModel::onItemClicked}"
+        >
+        <ImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="@dimen/dp_70"
+            android:layout_height="@dimen/dp_70"
+            android:layout_margin="@dimen/dp_8"
+            android:scaleType="fitXY"
+            app:imageUrl="@{viewModel.imageUrl}"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:src="@drawable/ic_collections_black_24dp"
+            />
+
+        <TextView
+            android:id="@+id/text_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_8"
+            android:text="@{viewModel.mStudentObservableField.studentId}"
+            android:maxLines="1"
+            tool:text="@string/text_test"
+            android:textColor="@color/color_red_100"
+            android:textSize="@dimen/sp_22"
+            app:layout_constraintLeft_toRightOf="@id/image_avatar"
+            app:layout_constraintTop_toTopOf="@id/image_avatar"
+            />
+        <TextView
+            android:id="@+id/text_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tool:text="@string/text_test"
+            android:text="@{viewModel.mStudentObservableField.username}"
+            android:textSize="@dimen/sp_20"
+            app:layout_constraintLeft_toLeftOf="@id/text_id"
+            app:layout_constraintTop_toBottomOf="@id/text_id"
+            />
+    </android.support.constraint.ConstraintLayout>
+</layout>
